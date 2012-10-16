@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:orientation="vertical" 
+    android:background="#bdf">
+    <TextView 
+        android:id="@+id/status"
+        android:text="@string/connecting_status"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"/>	
+        
+	    <TextView
+	        android:id="@+id/chat"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_weight="1"
+	        android:hint="chat"
+	        android:gravity="bottom"
+	        android:background="#fff"/>
+    <LinearLayout	xmlns:android="http://schemas.android.com/apk/res/android"
+    				android:layout_width="fill_parent"
+    				android:layout_height="wrap_content"
+    				android:paddingTop="10dp"
+    				android:orientation="horizontal">
+	    <EditText
+	        android:id="@+id/message"
+	        android:hint="type here"
+	        android:layout_weight="1"
+	        android:maxLines="1"
+	        android:layout_gravity="center_vertical"
+	        android:gravity="center_vertical"
+	        android:layout_height="wrap_content"
+	        android:layout_width="fill_parent"/>"
+	    <Button
+	        android:id="@+id/send"
+	        android:text="send"
+	        android:layout_gravity="center_vertical"
+	        android:gravity="center"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>

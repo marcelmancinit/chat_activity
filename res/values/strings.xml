@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="app_name">chat_activity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">GAE Chat!!!</string>
+	<string name="connecting_status">Connecting …</string>
+</resources>
