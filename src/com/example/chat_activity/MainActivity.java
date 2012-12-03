@@ -1,8 +1,11 @@
 package com.example.chat_activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -11,7 +14,10 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,10 +32,14 @@ public class MainActivity extends Activity {
 	boolean _isBound = false;
 	Button _sendButton = null;
 	
+	ProgressDialog _pDialog = null;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        _pDialog = ProgressDialog.show(this, "Please wait....", "Connecting ...");
         
         _sendButton = (Button)findViewById(R.id.send);
         _sendButton.setOnClickListener(onSend);
@@ -62,7 +72,6 @@ public class MainActivity extends Activity {
     	doBindService();
     }
     
-    
     @Override
     public void onPause() {
     	super.onPause();
@@ -80,6 +89,7 @@ public class MainActivity extends Activity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
             	case ChatConnector.server_connected: {
+            			_pDialog.dismiss();
             			_sendButton.setEnabled(true);
             			TextView status = (TextView)findViewById(R.id.status);
             			status.setText("Channel opened");
@@ -136,4 +146,31 @@ public class MainActivity extends Activity {
     	if( _isBound )
     		unbindService( _servConnection );
     }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return true;
+    }
+    
+    @Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.menu_about) {
+			TextView tv = new TextView(this);
+		    tv.setMovementMethod(LinkMovementMethod.getInstance());
+			tv.setText( R.string.txtCredits );
+		    
+		    new AlertDialog.Builder(this)
+		      .setTitle(R.string.menu_about)
+		      .setView(tv)
+		      .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		    	  public void onClick(DialogInterface dialog, int whichButton) {
+		    	  }
+		      }).show();
+			
+			return (true);
+		}
+		
+		return (super.onOptionsItemSelected(item));
+	}
 }

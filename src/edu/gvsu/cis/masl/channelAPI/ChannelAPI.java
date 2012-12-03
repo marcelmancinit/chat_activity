@@ -380,31 +380,34 @@ public class ChannelAPI {
      */
     private void handleMessage(TalkMessage msg) {
         try {
-            List<TalkMessage.TalkMessageEntry> entries = msg.getEntries();
-            msg = entries.get(0).getMessageValue();
-
-            entries = msg.getEntries();
-            this.messageId = entries.get(0).getNumberValue();
-
-            msg = entries.get(1).getMessageValue();
-            entries = msg.getEntries();
-
-            if (entries.get(0).getKind() == TalkMessage.MessageEntryKind.ME_STRING && entries.get(0).getStringValue().equals("c")) {
-                msg = entries.get(1).getMessageValue();
-                entries = msg.getEntries();
-
-                String thisSessionID = entries.get(0).getStringValue();
-                if (!thisSessionID.equals(this.sessionId)) {
-                    this.sessionId = thisSessionID;
-                }
-
-                msg = entries.get(1).getMessageValue();
-                entries = msg.getEntries();
-
-                if (entries.get(0).getStringValue().equalsIgnoreCase("ae")) {
-                    String msgValue = entries.get(1).getStringValue();
-                    this.channelListener.onMessage(msgValue);
-                }
+        	List<TalkMessage.TalkMessageEntry> entries = msg.getEntries();
+            
+            for( TalkMessage.TalkMessageEntry next : entries ) { // Added here
+            	msg = next.getMessageValue();
+	
+	            entries = msg.getEntries();
+	            this.messageId = entries.get(0).getNumberValue();
+	
+	            msg = entries.get(1).getMessageValue();
+	            entries = msg.getEntries();
+	
+	            if (entries.get(0).getKind() == TalkMessage.MessageEntryKind.ME_STRING && entries.get(0).getStringValue().equals("c")) {
+	                msg = entries.get(1).getMessageValue();
+	                entries = msg.getEntries();
+	
+	                String thisSessionID = entries.get(0).getStringValue();
+	                if (!thisSessionID.equals(this.sessionId)) {
+	                    this.sessionId = thisSessionID;
+	                }
+	
+	                msg = entries.get(1).getMessageValue();
+	                entries = msg.getEntries();
+	
+	                if (entries.get(0).getStringValue().equalsIgnoreCase("ae")) {
+	                    String msgValue = entries.get(1).getStringValue();
+	                    this.channelListener.onMessage(msgValue);
+	                }
+	            }
             }
         } catch (InvalidMessageException e) {
             e.printStackTrace();
