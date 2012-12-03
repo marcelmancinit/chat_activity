@@ -23,7 +23,6 @@ public class ChatListener implements ChannelService {
 	public void onOpen() {
 		System.out.println("Channel opened!!!");
 		
-		//((MainActivity.ChatRunnable)myRunnable ).setOpened();
 		myHandler.post(myRunnable);
 	}
 
@@ -36,12 +35,10 @@ public class ChatListener implements ChannelService {
 			strmessage = json.getString("message");
 			from = json.getString("from");	
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		if( strmessage.length() > 0 ) { 
-			//((MainActivity.ChatRunnable)myRunnable ).setMessage(strmessage, from);
 			myHandler.post(myRunnable);
 		}
 	}
